@@ -18,20 +18,27 @@ const HomePage = () => {
 
     const categories = ["programming", "film-making", "hollywood", "financial", "cooking", "social-media", "tech", "travel"];
 
+    
     const fetchLatestBlogs = async (page = 1) => {
         setLoading(true);
-        setError(null);
+        setError(null); // Reset error state
         try {
-            const response = await axios.get(`https://blog-web-ldr0.onrender.com/latest-blogs`, { params: { page } });
-            const data = response.data; 
-
-            const formattedData = await filterPaginationData({
+            // Directly include the page number in the URL
+            const response = await axios.get(`https://blog-web-ldr0.onrender.com/latest-blogs?page=${page}`);
+            const data = response.data; // Access the data
+    
+            console.log(data.blogs); // Log the blogs
+    
+            // Format the data
+            let formattedData = filterPaginationData({
                 state: blogs,
                 data: data.blogs,
                 page,
                 countRoute: "/all-latest-blog-count"
             });
-            setBlogs(formattedData || { results: [], totalDocs: 0 });
+            
+            // Update the state with the formatted data
+            setBlogs(formattedData);
         } catch (err) {
             console.error("Fetch latest blogs error:", err.response ? err.response.data : err.message);
             setError("Failed to fetch latest blogs. Please try again later.");
@@ -39,7 +46,7 @@ const HomePage = () => {
             setLoading(false);
         }
     };
-
+    
     const fetchBlogsByCategory = async ({ page = 1 }) => {
         setLoading(true);
         setError(null);
