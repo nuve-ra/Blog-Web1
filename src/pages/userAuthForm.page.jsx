@@ -7,15 +7,23 @@ import axios from "axios";
 import { UserContext } from "../App";
 import { storeInSession } from "../common/session";
 import fireExp from "../common/firebase";
+import { useNavigation } from "react-router-dom";
 import React from "react";
 
 const UserAuthForm = ({ type }) => {
+
+    const navigate=useNavigation();
     const { userAuth: { access_token }, setUserAuth } = useContext(UserContext);
     const authForm = useRef();
 
     const userAuthThroughServer = (serverRoute, formData) => {
         axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}${serverRoute}`, formData)
             .then((response) => {
+
+                if(serverRoute=="/signup"){
+                    navigate("/signin")
+                }
+
                 const data = response.data;
                 storeInSession("user", JSON.stringify(data));
                 setUserAuth(data);
