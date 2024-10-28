@@ -24,7 +24,7 @@ const HomePage = () => {
         setError(null); // Reset error state
         try {
             // Directly include the page number in the URL
-            const response = await axios.get(`https://blog-web-ldr0.onrender.com/latest-blogs?page=${page}`);
+            const response = await axios.get(`https://blog-web-ldr0.onrender.com/latest-blogs`);
             const data = response.data; // Access the data
     
             console.log(data.blogs); // Log the blogs
@@ -53,7 +53,7 @@ const HomePage = () => {
         try {
             console.log("Fetching blogs for category:", pageState);
             const response = await axios.post(
-                `https://blog-web-ldr0.onrender.com/latest-blog`, 
+                `https://blog-web-ldr0.onrender.com/latest-blogs`, 
                 { tag: pageState, page },
                 { headers: { 'Content-Type': 'application/json' } }
             );
