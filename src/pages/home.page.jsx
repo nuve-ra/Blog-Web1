@@ -18,17 +18,21 @@ const HomePage = () => {
 
     const categories = ["programming", "film-making", "hollywood", "financial", "cooking", "social-media", "tech", "travel"];
 
-    
     const fetchLatestBlogs = async (page = 1) => {
         setLoading(true);
         setError(null); // Reset error state
         try {
             // Directly include the page number in the URL
-            const response = await axios.get(`https://blog-web-ldr0.onrender.com/latest-blogs`);
-            const data = response.data; // Access the data
-    
+            const response = await axios.get(`https://blog-web-ldr0.onrender.com/latest-blogs?page=${page}`);
+            const data = response.data || {}; // Ensure data is defined
+
+            // Check if blogs is an array
+            if (!Array.isArray(data.blogs)) {
+                throw new Error("Invalid data structure"); // Throw an error if data structure is unexpected
+            }
+
             console.log(data.blogs); // Log the blogs
-    
+
             // Format the data
             let formattedData = filterPaginationData({
                 state: blogs,
@@ -36,7 +40,7 @@ const HomePage = () => {
                 page,
                 countRoute: "/all-latest-blog-count"
             });
-            
+
             // Update the state with the formatted data
             setBlogs(formattedData);
         } catch (err) {
@@ -46,7 +50,7 @@ const HomePage = () => {
             setLoading(false);
         }
     };
-    
+
     const fetchBlogsByCategory = async ({ page = 1 }) => {
         setLoading(true);
         setError(null);
@@ -57,7 +61,12 @@ const HomePage = () => {
                 { tag: pageState, page },
                 { headers: { 'Content-Type': 'application/json' } }
             );
-            const data = response.data;
+            const data = response.data || {}; // Ensure data is defined
+
+            // Check if blogs is an array
+            if (!Array.isArray(data.blogs)) {
+                throw new Error("Invalid data structure"); // Throw an error if data structure is unexpected
+            }
 
             console.log("Fetched blogs data:", data.blogs);
             setBlogs(data.blogs.length ? { results: data.blogs, totalDocs: data.totalDocs } : { results: [], totalDocs: 0 });
@@ -112,7 +121,7 @@ const HomePage = () => {
                         ) : error ? (
                             <NoDataMessage message={error} />
                         ) : (
-                            (blogs.results.length > 0 ? blogs.results.map((blog, i) => (
+                            (blogs.results && blogs.results.length > 0 ? blogs.results.map((blog, i) => ( // Safeguard rendering
                                 <BlogPostCard key={blog.id || i} content={blog} author={blog.author.personal_info} />
                             )) : <NoDataMessage message="No blogs published" />)
                         )}
