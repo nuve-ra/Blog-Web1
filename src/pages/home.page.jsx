@@ -28,6 +28,7 @@ const HomePage = () => {
 
             // Check if blogs is an array
             if (!Array.isArray(data.blogs)) {
+                console.error("Expected 'blogs' to be an array. Received:", data.blogs);
                 throw new Error("Expected 'blogs' to be an array.");
             }
 
