@@ -116,10 +116,10 @@ const HomePage = () => {
                         ) : error ? (
                             <NoDataMessage message={error} />
                         ) : (
-                                (blogs.results && Array.isArray(blogs.results) && blogs.results.length > 0 ? 
-                                blogs.results.map((blog, i) => (
-                               <BlogPostCard key={blog.id || i} content={blog} author={blog.author.personal_info} />
-                            )) : <NoDataMessage message="No blogs published" />)
+                                {blogs.results?.length > 0 ? (
+                            blogs.results.map((blog, i) => (
+                     <BlogPostCard key={blog.id || i} content={blog} author={blog.author?.personal_info} />    
+                            )) :( <NoDataMessage message="No blogs published" />
                         )}
                         <LoadMoreData state={blogs} fetchDataFun={(pageState === "Home" ? fetchLatestBlogs : fetchBlogsByCategory)} />
                     </>
