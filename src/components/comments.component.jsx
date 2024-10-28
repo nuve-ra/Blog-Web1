@@ -6,7 +6,7 @@ import CommentCard from "./comment-card.component";
 
 const fetchComments = async ({ skip = 0, blog_id, setParentCommentCountFun, comment_array = [] }) => {
     try {
-        const { data } = await axios.post(`https://blog-web-ldr0.onrender.com/get-blog-comments`, { blog_id, skip });
+        const { data } = await axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}/get-blog-comments`, { blog_id, skip });
         data.forEach(comment => {
             comment.childrenLevel = 0; // Set the childrenLevel if needed
         });

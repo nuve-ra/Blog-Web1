@@ -61,7 +61,7 @@ const PublishForm = () => {
         const blogObj = { title, banner, des, content, tags, draft: false };
 
         try {
-            await axios.post(`https://blog-web-ldr0.onrender.com/create-blog`, blogObj, {
+            await axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}/create-blog`, blogObj, {
                 headers: {
                     'Authorization': `Bearer ${access_token}`,
                 },

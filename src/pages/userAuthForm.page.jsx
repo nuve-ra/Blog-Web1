@@ -6,7 +6,7 @@ import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 import { UserContext } from "../App";
 import { storeInSession } from "../common/session";
-import authWithGoogle from "../common/firebase";
+import fireExp from "../common/firebase";
 import React from "react";
 
 const UserAuthForm = ({ type }) => {
@@ -63,7 +63,7 @@ const UserAuthForm = ({ type }) => {
 
     const handleGoogleAuth = (e) => {
         e.preventDefault();
-        authWithGoogle().then(user => {
+        fireExp.authWithGoogle().then(user => {
             let serverRoute = "/google-auth";
             let formData = {
                 access_token: user.accessToken

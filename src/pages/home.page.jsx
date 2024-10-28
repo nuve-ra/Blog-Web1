@@ -22,7 +22,7 @@ const HomePage = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`https://blog-web-ldr0.onrender.com/latest-blogs?page=${page}`);
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_DOMAIN}/latest-blogs?page=${page}`);
             console.log("Response data:", response.data); // Check the structure
             const data = response.data || {};
 
@@ -32,7 +32,7 @@ const HomePage = () => {
                 throw new Error("Expected 'blogs' to be an array.");
             }
 
-            let formattedData = filterPaginationData({
+            let formattedData = await filterPaginationData({
                 state: blogs,
                 data: data.blogs,
                 page,
@@ -54,7 +54,7 @@ const HomePage = () => {
         try {
             console.log("Fetching blogs for category:", pageState);
             const response = await axios.post(
-                `https://blog-web-ldr0.onrender.com/latest-blogs`, 
+                `${import.meta.env.VITE_SERVER_DOMAIN}/latest-blogs`, 
                 { tag: pageState, page },
                 { headers: { 'Content-Type': 'application/json' } }
             );
@@ -78,7 +78,9 @@ const HomePage = () => {
     const fetchTrendingBlogs = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.get(`https://blog-web-ldr0.onrender.com/trending-blogs`);
+            const { data } = await axios.get(`${import.meta.env.VITE_SERVER_DOMAIN}/trending-blogs`);
+
+            
             setTrendingBlogs(data.blogs || []);
         } catch (err) {
             console.error("Error fetching trending blogs:", err.message);
@@ -111,6 +113,7 @@ const HomePage = () => {
     return (
         <section className="h-cover flex justify-center gap-10">
             <div className="w-full">
+                <button onClick={()=>{console.log(blogs)}}>click me</button>
                 <InPageNavigation routes={[pageState, "Trending blogs"]} defaultHidden={[]}>
                     <>
                         {loading ? (
@@ -119,7 +122,7 @@ const HomePage = () => {
                             <NoDataMessage message={error} />
                         ) : (
                             // Corrected rendering logic
-                            blogs.results.length > 0 ? (
+                            blogs?.results?.length > 0 ? (
                                 blogs.results.map((blog, i) => (
                                     <BlogPostCard key={blog.id || i} content={blog} author={blog.author?.personal_info} />
                                 ))

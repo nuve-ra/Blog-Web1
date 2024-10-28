@@ -37,7 +37,7 @@ const Editor =() => {
         if(!blog_id){
             return setLoading(false);
         }
-        axios.post('https://blog-web-ldr0.onrender.com/get-blog',{blog_id})
+        axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}/get-blog`,{blog_id})
         .then(({data:{blog}})=>{
             setBlog(blog);
             setLoading(false);

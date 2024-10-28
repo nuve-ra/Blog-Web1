@@ -20,7 +20,7 @@ const SearchPage = () => {
         setError(null);
         console.log("Searching for blogs with query:", query, "on page:", page); // Log the query and page
         try {
-            const { data } = await axios.post(`https://blog-web-ldr0.onrender.com/search-blogs`, { query, page });
+            const { data } = await axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}/search-blogs`, { query, page });
             const formattedData = await filterPaginationData({
                 state: blogs,
                 data: data.blogs,

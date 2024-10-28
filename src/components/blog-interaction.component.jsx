@@ -16,7 +16,7 @@ const BlogInteraction = () => {
             if (access_token && blog_id) {
                 try {
                     const { data: { result } } = await axios.post(
-                        `https://blog-web-ldr0.onrender.com/isLiked-by-user`,
+                        `${import.meta.env.VITE_SERVER_DOMAIN}/isLiked-by-user`,
                         { blog_id },
                         {
                             headers: {
@@ -47,7 +47,7 @@ const BlogInteraction = () => {
             }));
 
             try {
-                await axios.post(`https://blog-web-ldr0.onrender.com/like-blog`, { blog_id, isLikedByUser }, {
+                await axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}/like-blog`, { blog_id, isLikedByUser }, {
                     headers: {
                         'Authorization': `Bearer ${access_token}`
                     }

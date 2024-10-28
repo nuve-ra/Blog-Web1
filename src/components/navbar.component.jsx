@@ -74,15 +74,15 @@ const Navbar = () => {
                                     <i className="fi fi-rr-bell text-2xl block mt-1"></i>
                                 </button>
                             </Link>
-                            <div className="relative" onClick={handleUserNavPanel} onBlur={handleBlur}>
-                                <button className="w-12 h-12 mt-1">
+                            <div className="relative" style={{cursor:'pointer'}} onClick={handleUserNavPanel} onBlur={handleBlur}>
+                            
                                     {profile_img ? (
                                         <img src={profile_img} className="w-full h-full object-cover rounded-full" alt="Profile" />
                                     ) : (
                                         <i className="fi fi-rr-user text-2xl"></i> // Fallback if no profile image
                                     )}
                                     {userNavPanel && <UserNavigationPanel />}
-                                </button>
+                                
                             </div>
                         </>
                     )}

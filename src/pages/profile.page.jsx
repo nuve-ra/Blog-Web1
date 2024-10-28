@@ -40,7 +40,7 @@ const ProfilePage = () => {
 
     const fetchUserProfile = async () => {
         try {
-            const { data: user } = await axios.post(`https://blog-web-ldr0.onrender.com/get-profile`, { username: profileId });
+            const { data: user } = await axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}/get-profile`, { username: profileId });
             setProfile(user);
             getBlogs({ user_id: user._id });
         } catch (err) {
@@ -58,14 +58,16 @@ const ProfilePage = () => {
     const getBlogs = async ({ page = 1, user_id }) => {
         user_id = user_id === undefined ? blogs?.user_id : user_id;
         try {
-            const { data } = await axios.post(`https://blog-web-ldr0.onrender.com/search-blogs`, { author: user_id, page });
+            const { data } = await axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}/search-blogs`, { author: user_id, page });
             const formattedData = await filterPaginationData({
                 state: blogs,
                 data: data.blogs,
                 page,
-                countRoute: "/search-blogs-count",
+                countRoute: "/search-blog-counts",
                 data_to_send: { author: user_id }
             });
+
+            console.log("formatted data",data,formattedData)
             formattedData.user_id = user_id;
             setBlogs(formattedData);
         } catch (err) {
@@ -83,7 +85,8 @@ const ProfilePage = () => {
             {loading ? (
                 <Loader />
             ) : (
-                <section className="h-cover md:flex flex-row-reverse items-start gap-5 min-[1100px]:gap-12">
+                <section className="h-cover md:flex flex-row-reverse items-start gap-5 min-[1100px]:gap-12" style={{border:"1px solid red"}}>
+                    
                     <div className="flex flex-col max-md:items-center gap-5 min-w-[250px]">
                         <img src={profile_img} alt={`${fullname}'s profile`} className="w-48 h-48 bg-grey rounded-full md:w-32 md:h-32" />
                         <h1 className="text-2xl font-medium">@{profileUsername}</h1>
@@ -93,7 +96,9 @@ const ProfilePage = () => {
                         <div className="flex gap-4 mt-2"></div>
                         {profileId === profileUsername && (
                             <Link to="/settings/edit-profile" className="btn-light rounded mt-2">Edit Profile</Link>
+
                         )}
+
                     </div>
                     <AboutUser className="max:hidden" bio={bio} social_links={social_links} joinedAt={joinedAt} />
                     <div className="max-md:mt-12">

@@ -35,7 +35,7 @@ const CommentField = ({ action }) => {
         try {
             setLoading(true); // Start loading
             const { data } = await axios.post(
-                `https://blog-web-ldr0.onrender.com/add-comment`,
+                `${import.meta.env.VITE_SERVER_DOMAIN}/add-comment`,
                 { _id: blog._id, blog_author, comment },
                 {
                     headers: {
