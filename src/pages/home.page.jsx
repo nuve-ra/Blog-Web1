@@ -113,7 +113,7 @@ const HomePage = () => {
     return (
         <section className="h-cover flex justify-center gap-10">
             <div className="w-full">
-                <button onClick={()=>{console.log(blogs)}}>click me</button>
+                <button onClick={()=>{console.log(blogs)}}></button>
                 <InPageNavigation routes={[pageState, "Trending blogs"]} defaultHidden={[]}>
                     <>
                         {loading ? (

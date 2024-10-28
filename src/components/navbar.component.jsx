@@ -77,7 +77,7 @@ const Navbar = () => {
                             <div className="relative" style={{cursor:'pointer'}} onClick={handleUserNavPanel} onBlur={handleBlur}>
                             
                                     {profile_img ? (
-                                        <img src={profile_img} className="w-full h-full object-cover rounded-full" alt="Profile" />
+                                        <img src={profile_img} className="w-12 h-12 object-cover rounded-full" alt="Profile" />
                                     ) : (
                                         <i className="fi fi-rr-user text-2xl"></i> // Fallback if no profile image
                                     )}
