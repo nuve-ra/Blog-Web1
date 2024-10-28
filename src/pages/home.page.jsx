@@ -19,37 +19,32 @@ const HomePage = () => {
     const categories = ["programming", "film-making", "hollywood", "financial", "cooking", "social-media", "tech", "travel"];
 
     const fetchLatestBlogs = async (page = 1) => {
-        setLoading(true);
-        setError(null); // Reset error state
-        try {
-            // Directly include the page number in the URL
-            const response = await axios.get(`https://blog-web-ldr0.onrender.com/latest-blogs?page=${page}`);
-            const data = response.data || {}; // Ensure data is defined
+    setLoading(true);
+    setError(null);
+    try {
+        const response = await axios.get(`https://blog-web-ldr0.onrender.com/latest-blogs?page=${page}`);
+        console.log("Response data:", response.data); // Check the structure
+        const data = response.data || {};
 
-            // Check if blogs is an array
-            if (!Array.isArray(data.blogs)) {
-                throw new Error("Invalid data structure"); // Throw an error if data structure is unexpected
-            }
-
-            console.log(data.blogs); // Log the blogs
-
-            // Format the data
-            let formattedData = filterPaginationData({
-                state: blogs,
-                data: data.blogs,
-                page,
-                countRoute: "/all-latest-blog-count"
-            });
-
-            // Update the state with the formatted data
-            setBlogs(formattedData);
-        } catch (err) {
-            console.error("Fetch latest blogs error:", err.response ? err.response.data : err.message);
-            setError("Failed to fetch latest blogs. Please try again later.");
-        } finally {
-            setLoading(false);
+        if (!Array.isArray(data.blogs)) {
+            throw new Error("Expected 'blogs' to be an array.");
         }
-    };
+
+        let formattedData = filterPaginationData({
+            state: blogs,
+            data: data.blogs,
+            page,
+            countRoute: "/all-latest-blog-count"
+        });
+
+        setBlogs(formattedData);
+    } catch (err) {
+        console.error("Fetch latest blogs error:", err);
+        setError("Failed to fetch latest blogs. Please try again later.");
+    } finally {
+        setLoading(false);
+    }
+};
 
     const fetchBlogsByCategory = async ({ page = 1 }) => {
         setLoading(true);
@@ -121,8 +116,9 @@ const HomePage = () => {
                         ) : error ? (
                             <NoDataMessage message={error} />
                         ) : (
-                            (blogs.results && blogs.results.length > 0 ? blogs.results.map((blog, i) => ( // Safeguard rendering
-                                <BlogPostCard key={blog.id || i} content={blog} author={blog.author.personal_info} />
+                                (blogs.results && Array.isArray(blogs.results) && blogs.results.length > 0 ? 
+                                blogs.results.map((blog, i) => (
+                               <BlogPostCard key={blog.id || i} content={blog} author={blog.author.personal_info} />
                             )) : <NoDataMessage message="No blogs published" />)
                         )}
                         <LoadMoreData state={blogs} fetchDataFun={(pageState === "Home" ? fetchLatestBlogs : fetchBlogsByCategory)} />
