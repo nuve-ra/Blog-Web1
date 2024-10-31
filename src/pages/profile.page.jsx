@@ -25,7 +25,7 @@ export const profileDataStructure = {
 };
 
 const ProfilePage = () => {
-    const { id: profileId } = useParams();
+    const { id: profileId } =useParams()
 
     const [profile, setProfile] = useState(profileDataStructure);
     const [loading, setLoading] = useState(true);
@@ -41,6 +41,7 @@ const ProfilePage = () => {
     const fetchUserProfile = async () => {
         try {
             const { data: user } = await axios.post(`${import.meta.env.VITE_SERVER_DOMAIN}/get-profile`, { username: profileId });
+            console.log("user",user)
             setProfile(user);
             getBlogs({ user_id: user._id });
         } catch (err) {

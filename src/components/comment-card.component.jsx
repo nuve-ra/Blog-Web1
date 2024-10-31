@@ -35,14 +35,14 @@ const CommentCard = ({ index, leftVal, commentData }) => {
                     <p className="min-w-fit">{getDay(commentedAt)}</p>
                 </div>
                 <p className="font-gelasio text-xl ml-3">{comment}</p>
-                <div className="flex gap-5 items-center mt-5">
+                {/* <div className="flex gap-5 items-center mt-5">
                     <button className="underline" onClick={handleReplyClick}>Reply</button>
                 </div>
                 {isReplying && (
                     <div className="mt-8">
                         <CommentField action="reply"   />
                     </div>
-                )}
+                )} */}
             </div>
         </div>
     );

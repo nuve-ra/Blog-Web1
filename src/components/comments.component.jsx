@@ -34,12 +34,14 @@ const CommentContainer = ({ id }) => {
                     skip,
                     setParentCommentCountFun: setTotalParentCommentsLoaded,
                 });
+
+                console.log("see results",result)
                 setCommentsArr(result.results);
                 setLoading(false);
             };
             loadComments();
         }
-    }, [id, skip]); // Dependency on skip to refetch when it changes
+    }, [id, skip,blog]); // Dependency on skip to refetch when it changes
 
     const handleLoadMore = () => {
         setSkip(prevSkip => prevSkip + 5); // Load more comments
@@ -64,7 +66,7 @@ const CommentContainer = ({ id }) => {
                 {loading ? (
                     <p>Loading comments...</p>
                 ) : (
-                    commentsArr.map((comment, index) => (
+                    comments.map((comment, index) => (
                         <CommentCard key={index} leftVal={comment.childrenLevel * 4} commentData={comment} />
                     ))
                 )}

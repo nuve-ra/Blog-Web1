@@ -65,7 +65,7 @@ const BlogPage = () => {
         <>
             {loading ? <Loader /> : (
                 <BlogContext.Provider value={{ blog, setBlog, isLikedByUser, setLikedByUser, commentsWrapper, setCommentsWrapper, totalParentCommentsLoaded, setTotalParentCommentsLoaded }}>
-                    <CommentsContainer />
+                    <CommentsContainer id={blog_id}/>
                     <div className="max-w-[900px] center py-10 max-lg:px-[5vw]">
                         <img src={banner} className="aspect-video" alt={title} />
                         <div className="mt-12">

@@ -13,9 +13,10 @@ const BlogInteraction = () => {
 
     useEffect(() => {
         const checkIfLiked = async () => {
+            console.log("isLiked",access_token,blog_id)
             if (access_token && blog_id) {
                 try {
-                    const { data: { result } } = await axios.post(
+                    const { data: { liked_by_user } } = await axios.post(
                         `${import.meta.env.VITE_SERVER_DOMAIN}/isLiked-by-user`,
                         { blog_id },
                         {
@@ -25,7 +26,8 @@ const BlogInteraction = () => {
                             }
                         }
                     );
-                    setLikedByUser(Boolean(result));
+                
+                    setLikedByUser(Boolean(liked_by_user));
                 } catch (err) {
                     console.error('Error fetching like status:', err.response ? err.response.data : err.message);
                 }

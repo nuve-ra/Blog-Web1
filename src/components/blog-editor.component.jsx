@@ -20,6 +20,7 @@ const BlogEditor = () => {
     const { title, banner } = blog; // Destructure for easier access
 
     useEffect(() => {
+        console.log(setTextEditor)
         const editor = new EditorJS({
             holder: "textEditor",
             data: Array.isArray(blog.content) ? blog.content : [], // Use blog.content instead of content
