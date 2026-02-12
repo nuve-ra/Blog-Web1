@@ -1,7 +1,3 @@
-Gemini said
-Since you have already built a solid MERN Stack Blogging Platform, your README should highlight your ability to handle complex state management, database relationships, and rich text editing.
-
-Here is a high-impact README template tailored specifically to the project you shared.
 
 🖋️ Full-Stack MERN Blogging Platform
 A modern, feature-rich blogging application with real-time interactions and an advanced block-based editor.
